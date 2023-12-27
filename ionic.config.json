@@ -1,0 +1,10 @@
+{
+  "name": "SAMA",
+  "integrations": {
+    "capacitor": {
+      "enabled": false
+    },
+    "cordova": {}
+  },
+  "type": "angular"
+}

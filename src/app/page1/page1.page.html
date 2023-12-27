@@ -1,0 +1,161 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Macro Add/Edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3">
+        <div class="label-container">
+          <label class="bold-label">Macro Name:</label>
+        </div>
+      </ion-col>
+      <ion-col size="9">
+        <div class="box required-field"  [ngClass]="{ 'error-box': !formData.macroTitle && isFormSubmitted }">
+          <input type="text" [(ngModel)]="formData.macroTitle" name="macroTitle" placeholder="Enter Macro Name" required
+            [ngClass]="{ 'required-field': !formData.macroTitle && isFormSubmitted }">
+          <!-- Add a validation message -->
+        </div>
+        <div *ngIf="!formData.macroTitle && isFormSubmitted" class="validation-error">Macro Name is required!</div>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col size="3">
+        <div class="label-container">
+          <label class="bold-label">OPC Server:</label>
+        </div>
+      </ion-col>
+      <ion-col size="9">
+        <div class="box required-field" [ngClass]="{ 'error-box': !formData.opcServer && isFormSubmitted }">
+          <input type="text" [(ngModel)]="formData.opcServer" name="opcServer" placeholder="Enter Server Name" required
+            [ngClass]="{ 'required-field': !formData.opcServer && isFormSubmitted }">
+          <!-- Add a validation message -->
+        </div>
+        <div *ngIf="!formData.opcServer && isFormSubmitted" class="validation-error">OPC Server is required!</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">
+        <div>
+          <div class="label-container">
+            <label class="bold-label">Select Tags:</label>
+          </div>
+    
+        </div>
+      </ion-col>
+      <ion-col size="9">
+        <div class="box required-field" [ngClass]="{'error-box': !formData.selectedTags.length && isFormSubmitted}">
+          <ng-select 
+  [multiple]="true"
+  [items]="selectOptions" 
+  [(ngModel)]="formData.selectedTags"
+  name="licenseAuthorityId" 
+  bindValue="TagName" 
+  bindLabel="TagName" 
+  placeholder="Select"
+  required 
+  [disabled]="isFormDisabled"
+  [closeOnSelect]="false"
+  (ngModelChange)="updateSelectedTagsForSecondDropdown()">
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected"/> {{item.TagName}}
+            </ng-template>
+          </ng-select>
+          <!-- Validation message for ng-select -->
+        </div>
+        <div *ngIf="!formData.selectedTags.length && isFormSubmitted" class="validation-error">Selected Tags are required!</div>
+
+      </ion-col>
+      
+    
+      
+</ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="box">
+          <div class="checkbox-container">
+            <ion-checkbox [(ngModel)]="checkboxValue" name="condition" (ionChange)="toggleAddCondition()"></ion-checkbox>
+          
+            <label>Add Condition</label>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isAddConditionSelected">
+      <ion-col>
+        <div class="box">
+          <select [(ngModel)]="conditionType" name="type" (change)="updateAddConditionButton()">
+            <option disabled selected value="">Selected Tags</option>
+            <option *ngFor="let tag of selectedTagsForSecondDropdown" [value]="tag">{{ tag }}</option>
+          </select>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="box">
+          <select [(ngModel)]="operator" name="operator" (change)="updateAddConditionButton()">
+            <option disabled selected value="">Select Operator</option>
+            <option value="=">=</option>
+            <option value=">">></option>
+            <option value="<"><</option>
+            <option value=">=">>=</option>
+            <option value="<="><=</option>
+            <option value="!=">!=</option>
+          </select>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="box">
+          <input type="text" [(ngModel)]="conditionValue" name="value" (input)="updateAddConditionButton()" placeholder="Enter Condition Value">
+        </div>
+      </ion-col>
+
+      <ion-col>
+        <div>
+          <ion-button (click)="onAddConditionClick()" [disabled]="!isAddConditionEnabled">Add</ion-button>
+        </div>
+</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let condition of selectedConditions; let i = index" class="selected-condition">
+      <div class="condition-item">
+        {{ condition.type }} {{ condition.operator }} {{ condition.value }}
+        <mat-button-toggle-group *ngIf="i < selectedConditions.length - 1" id="toggle" name="relationshipToggle" [(ngModel)]="selectedConditions[i].relationship" (ngModelChange)="updateTextareaValue()">
+          <mat-button-toggle value="AND" class="toggle-button" [class.selected]="selectedConditions[i].relationship === 'AND'" >
+            AND
+          </mat-button-toggle>
+          
+          <mat-button-toggle value="OR" class="toggle-button" [class.selected]="selectedConditions[i].relationship === 'OR'">
+            OR
+          </mat-button-toggle>
+          <mat-button-toggle value="NOT" class="toggle-button" [class.selected]="selectedConditions[i].relationship === 'NOT'">
+            NOT
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+        <ion-icon name="close" (click)="removeSelectedCondition(condition)"></ion-icon>
+      </div>
+    </ion-row>
+
+    <div>
+    </div>
+    <div class="box">
+
+      <ion-textarea [(ngModel)]="formData.textareaValue" rows="5" placeholder="conditions will be displayed here !!!"  readonly></ion-textarea>
+    </div>
+    
+    </ion-grid>
+
+    <div >        
+
+      <ion-button  *ngIf="!isedit" color="success" (click)="save()">Save</ion-button>
+      <ion-button  color="danger" (click)="cancel()">Cancel</ion-button>
+       </div>
+
+</ion-content> 
+

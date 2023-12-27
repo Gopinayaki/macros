@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Main Page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="search-bar" >
+    <ion-searchbar color="secondary" ></ion-searchbar>
+  </div>
+
+
+  
+ 
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Macro Name</th>
+            <th>Tag No</th>
+            <th>Description</th>
+            <th>Condition Met</th>
+            <th>Priority</th>
+            <th>Comment</th>
+            <th>Operator ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let item of (searchQuery ? searchResults : userList)">
+
+            <td>{{ item.id }}</td>
+            <td>{{ item.macroTitle }}</td>
+            <td>{{ item.selectedTags }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.selectedConditions.length > 0 ? item.selectedConditions[0].relationship : '' }}</td>
+            <td>{{ item.priority }}</td>
+            <td>{{ item.comment }}</td>
+            <td>{{ item.operatorId }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ion-content>
+
+
+  
+
+  
+    

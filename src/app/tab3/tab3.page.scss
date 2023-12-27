@@ -1,0 +1,27 @@
+.toolbar-container{
+  border: 1px solid #ddd !important;
+
+}
+  
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+th {
+  // background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+
+  

@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      To-Do List
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="open-action-sheet">Add</ion-button>
+      <ion-action-sheet
+        trigger="open-action-sheet"
+        class="my-custom-class"
+        [buttons]="actionSheetButtons"
+      ></ion-action-sheet>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let item of todoItems" class="todo-card" (click)="openModal(item)">
+      <!-- <ion-card *ngFor="let item of todoItems" class="todo-card" id="open-custom-dialog"> -->
+
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <ion-checkbox [(ngModel)]="item.completed" (ionChange)="toggleItemCompletion(item)" class="checkbox"></ion-checkbox>
+            </ion-col>
+            <ion-col size="6">
+              <ion-card-title class="ion-text-wrap">{{ item.text }}</ion-card-title>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <ion-button (click)="editItem(item)" fill="clear" color="primary">
+                <ion-icon name="create-outline" class="moon"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              <ion-button (click)="deleteItem(item)" fill="clear" color="danger">
+                <ion-icon name="trash-outline" class="moon"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+
+  <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+    <ng-template>
+      <div class="wrapper">
+        <h1>Dialog header</h1>
+        <ion-list lines="none">
+          <ion-item button="true" detail="false" (click)="modal.dismiss()">
+            <ion-icon name="person-circle"></ion-icon>
+            <ion-label>Item 1</ion-label>
+          </ion-item>
+          <ion-item button="true" detail="false" (click)="modal.dismiss()">
+            <ion-icon name="person-circle"></ion-icon>
+            <ion-label>Item 2</ion-label>
+          </ion-item>
+          <ion-item button="true" detail="false" (click)="modal.dismiss()">
+            <ion-icon name="person-circle"></ion-icon>
+            <ion-label>Item 3</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

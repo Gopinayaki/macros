@@ -1,0 +1,110 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import '@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+.moon{
+
+    color: var(--ion-text-color);
+}
+
+.checkbox{
+    border: 1px solid var(--ion-text-color);
+}
+
+
+
+
+.tab{
+
+color: var(--ion-fab-color);
+}
+
+
+.tab :hover{
+
+    color: var(--ion-color-primary);
+ }
+
+ /* styles.scss */
+// .add-item-action-sheet {
+//     --ion-action-sheet-background: #ffffff; // Change the background color as needed
+//     --ion-action-sheet-border-radius: 10px; // Adjust the border-radius as needed
+//   }
+
+  .custom-alert{
+
+    color: var(--ion-text-color);
+
+
+  }
+
+
+  .input{
+
+    color: var(--ion-text-color) !important;
+
+  }
+  
+
+  ion-modal#example-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  
+  ion-modal#example-modal h1 {
+    margin: 20px 20px 10px 20px;
+  }
+  
+  ion-modal#example-modal ion-icon {
+    margin-right: 6px;
+  
+    width: 48px;
+    height: 48px;
+  
+    padding: 4px 0;
+  
+    color: #aaaaaa;
+  }
+  
+  ion-modal#example-modal .wrapper {
+    margin-bottom: 10px;
+  }
+
+  #example-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  
+
+

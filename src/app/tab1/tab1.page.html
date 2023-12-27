@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Main Page</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+  <ion-content class="custom-background">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  <!-- search  -->
+  <div class="search-bar">
+    <ion-searchbar  color="medium" [(ngModel)]="searchQuery" (ionInput)="search()"></ion-searchbar>
+  </div>
+
+
+  <div class="footer">
+    <ion-row>
+
+      <ion-col size="3">
+        <ion-button expand="full" color="success" class="custom-button "  (click)="goToPage('page1')">Add</ion-button>
+      </ion-col>
+
+      <ion-col size="5">               
+        <ion-button expand="full" color="light" class="custom-button ">Enable/Disable</ion-button>
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-button  color="danger"expand="full" [disabled]="!isAnyCheckboxSelected()" (click)="deleteSelectedRows()">Delete</ion-button>
+      </ion-col>
+      <!-- [disabled]="!isAnyCheckboxSelected()" -->
+
+    </ion-row>
+  </div>
+  
+    <div class="table-container custom-table">
+      <table>
+        <thead class="thead">
+          <tr>
+            <th>S.No</th>
+            <th>E/D</th>
+            <th>Macro Name</th>
+           
+            <th>OPC Server  </th>
+            <th>Selected Tags </th>
+            <th>Condition</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+       
+        <tbody>
+          <tr *ngFor="let item of (searchQuery ? searchResults : userList)">
+            <td>{{ item.id }}</td>
+            <td>
+              <div class="box">
+                <ion-checkbox  [(ngModel)]="item.isSelected" class="checkbox"></ion-checkbox>
+               
+              </div>
+            </td>
+            <td *ngIf="!item.isEditing">{{ item.macroTitle }}</td>
+            <td *ngIf="item.isEditing">
+              <ion-input [(ngModel)]="item.macroTitle"></ion-input>
+            </td>
+            <td *ngIf="!item.isEditing">{{ item.opcServer }}</td>
+            <td *ngIf="item.isEditing">
+              <ion-input [(ngModel)]="item.opcServer"></ion-input>
+            </td>
+            <td>{{ item.selectedTags }}</td>
+            <td>{{ item.textareaValue }}</td>
+
+            
+            <td>
+              <!-- Add the edit button with the colored icon inside each edit cell -->
+              <ion-button fill="clear" color="primary" (click)="editItem(item)">
+                <ion-icon name="pencil"></ion-icon>
+              </ion-button>
+            </td>
+            </tr>
+        </tbody>
+                
+      </table>
+    </div>
+     
+  </ion-content>
